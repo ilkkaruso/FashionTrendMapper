@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "updated": 1769075245430,
+  "files": {
+    "/home/lesh/source/FashionTrendMapper/app/layout.tsx": {
+      "exports": [
+        "metadata",
+        "default",
+        "RootLayout"
+      ],
+      "imports": [
+        "next/font/google",
+        "next/link",
+        "./globals.css"
+      ],
+      "indexed": 1769073243752
+    },
+    "/home/lesh/source/FashionTrendMapper/app/page.tsx": {
+      "exports": [
+        "default",
+        "async"
+      ],
+      "imports": [
+        "@/lib/supabase/server"
+      ],
+      "indexed": 1769075245430
+    },
+    "/home/lesh/source/FashionTrendMapper/app/archive/page.tsx": {
+      "exports": [
+        "default",
+        "Archive"
+      ],
+      "imports": [],
+      "indexed": 1769073266415
+    },
+    "/home/lesh/source/FashionTrendMapper/app/admin/page.tsx": {
+      "exports": [
+        "default",
+        "Admin"
+      ],
+      "imports": [],
+      "indexed": 1769073275497
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/supabase/client.ts": {
+      "exports": [
+        "createClient"
+      ],
+      "imports": [
+        "@supabase/ssr"
+      ],
+      "indexed": 1769075153777
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/supabase/server.ts": {
+      "exports": [
+        "createClient"
+      ],
+      "imports": [
+        "@supabase/ssr",
+        "next/headers"
+      ],
+      "indexed": 1769075164855
+    },
+    "/home/lesh/source/FashionTrendMapper/middleware.ts": {
+      "exports": [
+        "middleware",
+        "config"
+      ],
+      "imports": [
+        "@supabase/ssr",
+        "next/server"
+      ],
+      "indexed": 1769075175597
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "updated": 1769075245431,
+  "naming": {},
+  "directories": {
+    "lib": {
+      "purpose": "Utility functions",
+      "files": 2
+    }
+  },
+  "suffixes": {}
+}
