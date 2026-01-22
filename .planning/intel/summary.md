@@ -1,6 +1,6 @@
 # Codebase Intelligence
 
-**Indexed entities:** 7
+**Indexed entities:** 8
 **Last updated:** 2026-01-22
 
 ## Dependency Hotspots
@@ -13,6 +13,6 @@ Files with most dependents (change carefully):
 
 - **Component**: 4 files
 - **Util**: 2 files
-- **Middleware**: 1 files
+- **Middleware**: 2 files
 
 **Relationships tracked:** 2

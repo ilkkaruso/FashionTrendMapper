@@ -1,7 +1,13 @@
 {
   "version": 1,
-  "updated": 1769075245431,
-  "naming": {},
+  "updated": 1769076405644,
+  "naming": {
+    "exports": {
+      "dominant": "camelCase",
+      "count": 8,
+      "percentage": 73
+    }
+  },
   "directories": {
     "lib": {
       "purpose": "Utility functions",

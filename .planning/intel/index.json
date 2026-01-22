@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": 1769075245430,
+  "updated": 1769076416934,
   "files": {
     "/home/lesh/source/FashionTrendMapper/app/layout.tsx": {
       "exports": [
@@ -60,16 +60,17 @@
       ],
       "indexed": 1769075164855
     },
-    "/home/lesh/source/FashionTrendMapper/middleware.ts": {
+    "/home/lesh/source/FashionTrendMapper/proxy.ts": {
       "exports": [
-        "middleware",
-        "config"
+        "config",
+        "default",
+        "async"
       ],
       "imports": [
         "@supabase/ssr",
         "next/server"
       ],
-      "indexed": 1769075175597
+      "indexed": 1769076405644
     }
   }
 }
