@@ -10,17 +10,17 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Current Position
 
 - **Phase:** 1 of 5 — Foundation
-- **Plan:** 1 of 3 in phase (01-01-PLAN.md)
+- **Plan:** 2 of 3 in phase (01-02-PLAN.md)
 - **Status:** In progress
-- **Last activity:** 2026-01-22 - Completed 01-01-PLAN.md
+- **Last activity:** 2026-01-22 - Completed 01-02-PLAN.md
 
-**Progress:** ███░░░░░░░ 33% (1/3 plans in Phase 1)
+**Progress:** ██████░░░░ 67% (2/3 plans in Phase 1)
 
 ## Milestone: v1.0
 
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
-| 1 | Foundation | ◐ In Progress | 33% (1/3) |
+| 1 | Foundation | ◐ In Progress | 67% (2/3) |
 | 2 | Data Collection | ○ Pending | 0% |
 | 3 | Visualization | ○ Pending | 0% |
 | 4 | Affiliate Integration | ○ Pending | 0% |
@@ -28,6 +28,7 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Recent Activity
 
+- 2026-01-22: Completed 01-02-PLAN.md - Supabase database with 8 tables
 - 2026-01-22: Completed 01-01-PLAN.md - Next.js foundation with three routes
 - 2026-01-21: Project initialized
 - 2026-01-21: Domain research completed
@@ -38,6 +39,10 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| gen_random_uuid() over uuid-ossp | Built-in to modern Postgres, no extension needed | 2026-01-22 |
+| RLS enabled on all tables upfront | Security-first approach, prevent public writes | 2026-01-22 |
+| JSONB for external_links/data_snapshot | Flexible schema for varying data sources | 2026-01-22 |
+| CASCADE delete on foreign keys | Automatic cleanup, referential integrity | 2026-01-22 |
 | Inter font for typography | Cleaner, more professional for fashion content | 2026-01-22 |
 | Light mode only (no dark mode) | Cleaner, more fashion-forward feel | 2026-01-22 |
 | Minimal header navigation | Lets content take full focus per CONTEXT.md | 2026-01-22 |
@@ -59,8 +64,8 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Session Continuity
 
-Last session: 2026-01-22T09:15:56Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-01-22T09:39:03Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None
 
 ---
