@@ -7,13 +7,13 @@
 
 | Phase | Name | Requirements | Status |
 |-------|------|--------------|--------|
-| 1 | Foundation | 4 | ○ Pending |
+| 1 | Foundation | 4 | ✅ Complete |
 | 2 | Data Collection | 6 | ○ Pending |
 | 3 | Visualization | 15 | ○ Pending |
 | 4 | Affiliate Integration | 8 | ○ Pending |
 | 5 | Admin & Archive | 12 | ○ Pending |
 
-**Total:** 5 phases | 39 requirements | 0% complete
+**Total:** 5 phases | 39 requirements | 20% complete
 
 ---
 
@@ -37,9 +37,9 @@
 **Plans:** 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Next.js app creation with TypeScript, Tailwind, and basic routes
-- [ ] 01-02-PLAN.md — Supabase project setup with complete database schema
-- [ ] 01-03-PLAN.md — Supabase client integration and Vercel deployment
+- [x] 01-01-PLAN.md — Next.js app creation with TypeScript, Tailwind, and basic routes
+- [x] 01-02-PLAN.md — Supabase project setup with complete database schema
+- [x] 01-03-PLAN.md — Supabase client integration and Vercel deployment
 
 **Dependencies:** None (starting point)
 
@@ -65,6 +65,15 @@ Plans:
 5. Daily cron job configured and triggers at 5am UTC
 6. Rate limiting and caching prevents API failures
 7. Historical data stored for change percentage calculations
+
+**Plans:** 5 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Install dependencies, create shared types, caching & rate limiting utilities
+- [ ] 02-02-PLAN.md — Google Trends fetcher with caching and graceful degradation
+- [ ] 02-03-PLAN.md — Reddit fetcher with OAuth and subreddit aggregation
+- [ ] 02-04-PLAN.md — Score normalization and database persistence with history
+- [ ] 02-05-PLAN.md — Cron endpoint wiring all components together
 
 **Dependencies:** Phase 1 (database must exist)
 
@@ -186,7 +195,7 @@ All 39 v1 requirements mapped:
 | Archive | 5 | 5 |
 | Admin | 6 | 5 |
 
-**Coverage:** 39/39 requirements (100%) ✓
+**Coverage:** 39/39 requirements (100%)
 
 ---
 
@@ -202,4 +211,4 @@ All 39 v1 requirements mapped:
 ---
 
 *Roadmap created: 2026-01-21*
-*Last updated: 2026-01-22*
+*Last updated: 2026-01-24*
