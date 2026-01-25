@@ -10,24 +10,25 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Current Position
 
 - **Phase:** 2 of 5 — Data Collection (in progress)
-- **Plan:** 2 of 4 in phase (completed: 02-01, 02-02)
-- **Status:** Google Trends fetcher complete, ready for aggregation layer
-- **Last activity:** 2026-01-25 - Completed 02-02-PLAN.md
+- **Plan:** 3 of 4 in phase (completed: 02-01, 02-02, 02-03)
+- **Status:** Score normalization and persistence complete, ready for aggregation layer
+- **Last activity:** 2026-01-25 - Completed 02-03-PLAN.md
 
-**Progress:** ████████░░ 50% Phase 2 | █████░░░░░ 33% Overall
+**Progress:** ████████████░░ 75% Phase 2 | ██████░░░░ 40% Overall
 
 ## Milestone: v1.0
 
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
 | 1 | Foundation | ✅ Complete | 100% (3/3) |
-| 2 | Data Collection | 🔄 In Progress | 50% (2/4) |
+| 2 | Data Collection | 🔄 In Progress | 75% (3/4) |
 | 3 | Visualization | ○ Pending | 0% |
 | 4 | Affiliate Integration | ○ Pending | 0% |
 | 5 | Admin & Archive | ○ Pending | 0% |
 
 ## Recent Activity
 
+- 2026-01-25: Completed 02-03-PLAN.md - Score normalization and database persistence
 - 2026-01-25: Completed 02-02-PLAN.md - Google Trends fetcher with fashion filtering
 - 2026-01-25: Completed 02-01-PLAN.md - Data collection infrastructure (types, cache, rate-limiter)
 - 2026-01-24: Completed 01-03-PLAN.md - Supabase integration + Vercel deployment
@@ -39,6 +40,10 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| Min-max normalization scales 0-100 relative to batch | Ensures fair comparison within each batch, highest=100, lowest=0 | 2026-01-25 |
+| All equal scores → 50 (middle value) | Avoid division by zero when max=min, 50 represents average | 2026-01-25 |
+| Change percentage = 0 for new trends | No yesterday snapshot = new trend, clear distinction from trending-up | 2026-01-25 |
+| Cap change at +100% when yesterday = 0 | Prevents "Infinity%" display in UI, +100% is max shown increase | 2026-01-25 |
 | 17 fashion keywords for filtering | Covers broad categories (clothing, accessories, styles) while avoiding generic terms | 2026-01-25 |
 | parseTraffic() string conversion | Google Trends returns "50K+", normalize to integers for consistent scoring | 2026-01-25 |
 | Rate limit before cache check | Prevents cache bypass abuse, stops thundering herd on cache expiry | 2026-01-25 |
@@ -72,6 +77,7 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Blockers / Concerns
 
 - **Upstash Redis credentials required** - Cache/rate-limiter need UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN env vars
+- **Database migrations 002 and 003 need manual execution** - trend_sources junction table and current_score column must be applied in Supabase SQL Editor before testing persistence
 - Amazon Associates requires existing site traffic for approval — apply early
 - google-trends-api can break when Google changes backend — monitor for errors
 - Vercel Hobby cron runs anywhere in hour (not exact time) - acceptable for daily trends
@@ -79,7 +85,7 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 02-02-PLAN.md - Google Trends fetcher with fashion filtering ready
+Stopped at: Completed 02-03-PLAN.md - Score normalization and persistence layer ready
 Resume file: None
 
 ---
