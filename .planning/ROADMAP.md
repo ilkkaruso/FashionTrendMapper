@@ -8,12 +8,12 @@
 | Phase | Name | Requirements | Status |
 |-------|------|--------------|--------|
 | 1 | Foundation | 4 | ✅ Complete |
-| 2 | Data Collection | 6 | ○ Pending |
+| 2 | Data Collection | 5 | ○ Pending |
 | 3 | Visualization | 15 | ○ Pending |
 | 4 | Affiliate Integration | 8 | ○ Pending |
 | 5 | Admin & Archive | 12 | ○ Pending |
 
-**Total:** 5 phases | 39 requirements | 20% complete
+**Total:** 5 phases | 38 requirements | 21% complete
 
 ---
 
@@ -47,33 +47,31 @@ Plans:
 
 ## Phase 2: Data Collection
 
-**Goal:** Build data fetching pipeline — Google Trends and Reddit fetchers with daily cron job.
+**Goal:** Build data fetching pipeline — Google Trends fetcher with daily cron job.
 
 **Requirements:**
 - FETCH-01: Fetch fashion trends from Google Trends daily
-- FETCH-02: Fetch fashion trends from Reddit fashion subreddits daily
+- ~~FETCH-02: Fetch fashion trends from Reddit fashion subreddits daily~~ (dropped - TOS prohibits commercial use)
 - FETCH-03: Scheduled daily refresh at fixed time (5am UTC)
-- FETCH-04: Normalize and aggregate scores across sources
+- FETCH-04: Normalize scores to 0-100 scale
 - FETCH-05: Track trend history for change calculations
 - FETCH-06: Handle API rate limits gracefully with caching
 
 **Success Criteria:**
 1. Google Trends fetcher retrieves fashion-related search trends
-2. Reddit fetcher pulls trending topics from r/malefashionadvice, r/femalefashionadvice, r/streetwear
-3. Scores normalized to 0-100 scale per source
-4. Combined scoring algorithm weights sources appropriately
-5. Daily cron job configured and triggers at 5am UTC
-6. Rate limiting and caching prevents API failures
-7. Historical data stored for change percentage calculations
+2. Scores normalized to 0-100 scale
+3. Daily cron job configured and triggers at 5am UTC
+4. Rate limiting and caching prevents API failures
+5. Historical data stored for change percentage calculations
 
 **Plans:** 5 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Install dependencies, create shared types, caching & rate limiting utilities
-- [ ] 02-02-PLAN.md — Google Trends fetcher with caching and graceful degradation
-- [ ] 02-03-PLAN.md — Reddit fetcher with OAuth and subreddit aggregation
-- [ ] 02-04-PLAN.md — Score normalization and database persistence with history
-- [ ] 02-05-PLAN.md — Cron endpoint wiring all components together
+- [x] 02-01-PLAN.md — Install dependencies, create shared types, caching & rate limiting utilities
+- [x] 02-02-PLAN.md — Google Trends fetcher with caching and graceful degradation
+- [x] 02-03-PLAN.md — Score normalization and database persistence with history
+- [x] 02-04-PLAN.md — Cron endpoint wiring all components together
+- [ ] 02-05-PLAN.md — Fix database RLS policies and UNIQUE constraint for writes (gap closure)
 
 **Dependencies:** Phase 1 (database must exist)
 
@@ -187,7 +185,7 @@ All 39 v1 requirements mapped:
 | Category | Count | Phases |
 |----------|-------|--------|
 | Infrastructure | 5 | 1, 2, 5 |
-| Data Collection | 6 | 2 |
+| Data Collection | 5 | 2 |
 | Visualization | 7 | 3 |
 | Data Display | 4 | 3 |
 | Modal | 5 | 3, 4 |
@@ -195,7 +193,7 @@ All 39 v1 requirements mapped:
 | Archive | 5 | 5 |
 | Admin | 6 | 5 |
 
-**Coverage:** 39/39 requirements (100%)
+**Coverage:** 38/38 requirements (100%)
 
 ---
 
@@ -211,4 +209,4 @@ All 39 v1 requirements mapped:
 ---
 
 *Roadmap created: 2026-01-21*
-*Last updated: 2026-01-24*
+*Last updated: 2026-01-25*
