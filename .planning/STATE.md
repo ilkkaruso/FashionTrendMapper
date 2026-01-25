@@ -9,25 +9,26 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Current Position
 
-- **Phase:** 2 of 5 — Data Collection (in progress)
-- **Plan:** 3 of 4 in phase (completed: 02-01, 02-02, 02-03)
-- **Status:** Score normalization and persistence complete, ready for aggregation layer
-- **Last activity:** 2026-01-25 - Completed 02-03-PLAN.md
+- **Phase:** 2 of 5 — Data Collection (complete)
+- **Plan:** 4 of 4 in phase (completed: 02-01, 02-02, 02-03, 02-04)
+- **Status:** Phase 2 complete - Daily cron endpoint operational, ready for Phase 3 visualization
+- **Last activity:** 2026-01-25 - Completed 02-04-PLAN.md
 
-**Progress:** ████████████░░ 75% Phase 2 | ██████░░░░ 40% Overall
+**Progress:** ████████████████ 100% Phase 2 | ████████░░ 50% Overall
 
 ## Milestone: v1.0
 
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
 | 1 | Foundation | ✅ Complete | 100% (3/3) |
-| 2 | Data Collection | 🔄 In Progress | 75% (3/4) |
+| 2 | Data Collection | ✅ Complete | 100% (4/4) |
 | 3 | Visualization | ○ Pending | 0% |
 | 4 | Affiliate Integration | ○ Pending | 0% |
 | 5 | Admin & Archive | ○ Pending | 0% |
 
 ## Recent Activity
 
+- 2026-01-25: Completed 02-04-PLAN.md - Daily cron endpoint for automated trend collection (Phase 2 complete)
 - 2026-01-25: Completed 02-03-PLAN.md - Score normalization and database persistence
 - 2026-01-25: Completed 02-02-PLAN.md - Google Trends fetcher with fashion filtering
 - 2026-01-25: Completed 02-01-PLAN.md - Data collection infrastructure (types, cache, rate-limiter)
@@ -40,6 +41,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| CRON_SECRET authentication via Bearer token | Vercel sends cron requests with Authorization header, prevents unauthorized access | 2026-01-25 |
+| Stats-based cron responses for monitoring | Return detailed stats (counts, duration, success flags) for Vercel log analysis | 2026-01-25 |
+| Force dynamic cron endpoint | dynamic='force-dynamic' prevents response caching, critical for daily jobs | 2026-01-25 |
 | Min-max normalization scales 0-100 relative to batch | Ensures fair comparison within each batch, highest=100, lowest=0 | 2026-01-25 |
 | All equal scores → 50 (middle value) | Avoid division by zero when max=min, 50 represents average | 2026-01-25 |
 | Change percentage = 0 for new trends | No yesterday snapshot = new trend, clear distinction from trending-up | 2026-01-25 |
@@ -76,6 +80,7 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Blockers / Concerns
 
+- **CRON_SECRET environment variable required** - Generate with `openssl rand -hex 32` and add to Vercel dashboard before deployment
 - **Upstash Redis credentials required** - Cache/rate-limiter need UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN env vars
 - **Database migrations 002 and 003 need manual execution** - trend_sources junction table and current_score column must be applied in Supabase SQL Editor before testing persistence
 - Amazon Associates requires existing site traffic for approval — apply early
@@ -85,7 +90,7 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 02-03-PLAN.md - Score normalization and persistence layer ready
+Stopped at: Completed 02-04-PLAN.md - Phase 2 complete, daily cron endpoint operational
 Resume file: None
 
 ---
