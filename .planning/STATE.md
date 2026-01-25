@@ -9,35 +9,38 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Current Position
 
-- **Phase:** 1 of 5 — Foundation ✅ COMPLETE
-- **Plan:** 3 of 3 in phase (all complete)
-- **Status:** Phase 1 complete
-- **Last activity:** 2026-01-24 - Deployed to Vercel
+- **Phase:** 2 of 5 — Data Collection (in progress)
+- **Plan:** 1 of 4 in phase (completed: 02-01)
+- **Status:** Infrastructure complete, ready for Google Trends fetcher
+- **Last activity:** 2026-01-25 - Completed 02-01-PLAN.md
 
-**Progress:** ██████████ 100% Phase 1 | ██░░░░░░░░ 20% Overall
+**Progress:** ██░░░░░░░░ 25% Phase 2 | ███░░░░░░░ 25% Overall
 
 ## Milestone: v1.0
 
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
 | 1 | Foundation | ✅ Complete | 100% (3/3) |
-| 2 | Data Collection | ○ Pending | 0% |
+| 2 | Data Collection | 🔄 In Progress | 25% (1/4) |
 | 3 | Visualization | ○ Pending | 0% |
 | 4 | Affiliate Integration | ○ Pending | 0% |
 | 5 | Admin & Archive | ○ Pending | 0% |
 
 ## Recent Activity
 
+- 2026-01-25: Completed 02-01-PLAN.md - Data collection infrastructure (types, cache, rate-limiter)
 - 2026-01-24: Completed 01-03-PLAN.md - Supabase integration + Vercel deployment
 - 2026-01-24: Fixed Next.js 16 middleware→proxy deprecation
 - 2026-01-22: Completed 01-02-PLAN.md - Supabase database with 8 tables
 - 2026-01-22: Completed 01-01-PLAN.md - Next.js foundation with three routes
-- 2026-01-21: Project initialized, requirements defined, roadmap created
 
 ## Key Decisions
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| Stale cache fallback pattern | Dual-cache (fresh + 24h stale) for resilience when fetch fails | 2026-01-25 |
+| Sliding window rate limiter | 10 req/10s for Google Trends, prevents thundering herd | 2026-01-25 |
+| Vercel cron at 5am UTC | Daily trend fetching, Hobby plan runs within hour | 2026-01-25 |
 | proxy.ts over middleware.ts | Next.js 16 deprecation, clearer network boundary | 2026-01-24 |
 | gen_random_uuid() over uuid-ossp | Built-in to modern Postgres, no extension needed | 2026-01-22 |
 | RLS enabled on all tables upfront | Security-first approach, prevent public writes | 2026-01-22 |
@@ -63,14 +66,16 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Blockers / Concerns
 
+- **Upstash Redis credentials required** - Cache/rate-limiter need UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN env vars
 - Amazon Associates requires existing site traffic for approval — apply early
-- pytrends can break when Google changes backend — monitor and have fallback
+- google-trends-api can break when Google changes backend — monitor for errors
+- Vercel Hobby cron runs anywhere in hour (not exact time) - acceptable for daily trends
 
 ## Session Continuity
 
-Last session: 2026-01-24
-Stopped at: Phase 1 complete, ready for Phase 2
+Last session: 2026-01-25
+Stopped at: Completed 02-01-PLAN.md - Infrastructure ready for Google Trends fetcher
 Resume file: None
 
 ---
-*Last updated: 2026-01-24*
+*Last updated: 2026-01-25*
