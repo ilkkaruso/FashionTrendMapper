@@ -10,24 +10,25 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Current Position
 
 - **Phase:** 2 of 5 — Data Collection (in progress)
-- **Plan:** 1 of 4 in phase (completed: 02-01)
-- **Status:** Infrastructure complete, ready for Google Trends fetcher
-- **Last activity:** 2026-01-25 - Completed 02-01-PLAN.md
+- **Plan:** 2 of 4 in phase (completed: 02-01, 02-02)
+- **Status:** Google Trends fetcher complete, ready for aggregation layer
+- **Last activity:** 2026-01-25 - Completed 02-02-PLAN.md
 
-**Progress:** ██░░░░░░░░ 25% Phase 2 | ███░░░░░░░ 25% Overall
+**Progress:** ████████░░ 50% Phase 2 | █████░░░░░ 33% Overall
 
 ## Milestone: v1.0
 
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
 | 1 | Foundation | ✅ Complete | 100% (3/3) |
-| 2 | Data Collection | 🔄 In Progress | 25% (1/4) |
+| 2 | Data Collection | 🔄 In Progress | 50% (2/4) |
 | 3 | Visualization | ○ Pending | 0% |
 | 4 | Affiliate Integration | ○ Pending | 0% |
 | 5 | Admin & Archive | ○ Pending | 0% |
 
 ## Recent Activity
 
+- 2026-01-25: Completed 02-02-PLAN.md - Google Trends fetcher with fashion filtering
 - 2026-01-25: Completed 02-01-PLAN.md - Data collection infrastructure (types, cache, rate-limiter)
 - 2026-01-24: Completed 01-03-PLAN.md - Supabase integration + Vercel deployment
 - 2026-01-24: Fixed Next.js 16 middleware→proxy deprecation
@@ -38,6 +39,10 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| 17 fashion keywords for filtering | Covers broad categories (clothing, accessories, styles) while avoiding generic terms | 2026-01-25 |
+| parseTraffic() string conversion | Google Trends returns "50K+", normalize to integers for consistent scoring | 2026-01-25 |
+| Rate limit before cache check | Prevents cache bypass abuse, stops thundering herd on cache expiry | 2026-01-25 |
+| Test endpoint security model | Dev-accessible for iteration, prod-requires-CRON_SECRET to prevent abuse | 2026-01-25 |
 | Stale cache fallback pattern | Dual-cache (fresh + 24h stale) for resilience when fetch fails | 2026-01-25 |
 | Sliding window rate limiter | 10 req/10s for Google Trends, prevents thundering herd | 2026-01-25 |
 | Vercel cron at 5am UTC | Daily trend fetching, Hobby plan runs within hour | 2026-01-25 |
@@ -74,7 +79,7 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Session Continuity
 
 Last session: 2026-01-25
-Stopped at: Completed 02-01-PLAN.md - Infrastructure ready for Google Trends fetcher
+Stopped at: Completed 02-02-PLAN.md - Google Trends fetcher with fashion filtering ready
 Resume file: None
 
 ---
