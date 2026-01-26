@@ -110,6 +110,15 @@ Plans:
 9. Clicking bubble opens modal with details
 10. Modal shows trend description, source breakdown, related trends
 
+**Plans:** 5 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Install D3 dependencies, create hooks (useForceSimulation, useResizeObserver), visualization types
+- [ ] 03-02-PLAN.md — BubbleChart and Bubble components with D3 force simulation and text wrapping
+- [ ] 03-03-PLAN.md — FilterBar component and useTrendFiltering hook with URL state management
+- [ ] 03-04-PLAN.md — TrendModal with native dialog and related trends
+- [ ] 03-05-PLAN.md — Wire all components on home page with API endpoint
+
 **Dependencies:** Phase 2 (needs trend data to display)
 
 ---
@@ -209,4 +218,4 @@ All 39 v1 requirements mapped:
 ---
 
 *Roadmap created: 2026-01-21*
-*Last updated: 2026-01-25*
+*Last updated: 2026-01-26*
