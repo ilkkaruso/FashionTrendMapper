@@ -8,12 +8,12 @@
 | Phase | Name | Requirements | Status |
 |-------|------|--------------|--------|
 | 1 | Foundation | 4 | ✅ Complete |
-| 2 | Data Collection | 5 | ○ Pending |
+| 2 | Data Collection | 5 | ✅ Complete |
 | 3 | Visualization | 15 | ○ Pending |
 | 4 | Affiliate Integration | 8 | ○ Pending |
 | 5 | Admin & Archive | 12 | ○ Pending |
 
-**Total:** 5 phases | 38 requirements | 21% complete
+**Total:** 5 phases | 38 requirements | 40% complete
 
 ---
 
@@ -71,7 +71,7 @@ Plans:
 - [x] 02-02-PLAN.md — Google Trends fetcher with caching and graceful degradation
 - [x] 02-03-PLAN.md — Score normalization and database persistence with history
 - [x] 02-04-PLAN.md — Cron endpoint wiring all components together
-- [ ] 02-05-PLAN.md — Fix database RLS policies and UNIQUE constraint for writes (gap closure)
+- [x] 02-05-PLAN.md — Fix database RLS policies and UNIQUE constraint for writes (gap closure)
 
 **Dependencies:** Phase 1 (database must exist)
 
