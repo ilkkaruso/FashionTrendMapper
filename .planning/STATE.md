@@ -10,9 +10,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Current Position
 
 - **Phase:** 2 of 5 — Data Collection (complete)
-- **Plan:** 4 of 4 in phase (completed: 02-01, 02-02, 02-03, 02-04)
-- **Status:** Phase 2 complete - Daily cron endpoint operational, ready for Phase 3 visualization
-- **Last activity:** 2026-01-25 - Completed 02-04-PLAN.md
+- **Plan:** 5 of 5 in phase (completed: 02-01, 02-02, 02-03, 02-04, 02-05)
+- **Status:** Phase 2 complete - Database write policies enabled, full data pipeline operational, ready for Phase 3 visualization
+- **Last activity:** 2026-01-26 - Completed 02-05-PLAN.md (gap closure)
 
 **Progress:** ████████████████ 100% Phase 2 | ████████░░ 50% Overall
 
@@ -21,26 +21,29 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
 | 1 | Foundation | ✅ Complete | 100% (3/3) |
-| 2 | Data Collection | ✅ Complete | 100% (4/4) |
+| 2 | Data Collection | ✅ Complete | 100% (5/5) |
 | 3 | Visualization | ○ Pending | 0% |
 | 4 | Affiliate Integration | ○ Pending | 0% |
 | 5 | Admin & Archive | ○ Pending | 0% |
 
 ## Recent Activity
 
-- 2026-01-25: Completed 02-04-PLAN.md - Daily cron endpoint for automated trend collection (Phase 2 complete)
+- 2026-01-26: Completed 02-05-PLAN.md - Database write policies (gap closure, Phase 2 complete)
+- 2026-01-25: Completed 02-04-PLAN.md - Daily cron endpoint for automated trend collection
 - 2026-01-25: Completed 02-03-PLAN.md - Score normalization and database persistence
 - 2026-01-25: Completed 02-02-PLAN.md - Google Trends fetcher with fashion filtering
 - 2026-01-25: Completed 02-01-PLAN.md - Data collection infrastructure (types, cache, rate-limiter)
 - 2026-01-24: Completed 01-03-PLAN.md - Supabase integration + Vercel deployment
 - 2026-01-24: Fixed Next.js 16 middleware→proxy deprecation
 - 2026-01-22: Completed 01-02-PLAN.md - Supabase database with 8 tables
-- 2026-01-22: Completed 01-01-PLAN.md - Next.js foundation with three routes
 
 ## Key Decisions
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| Service_role-scoped RLS policies for server operations | Cron runs server-side with service_role credentials, policies must target service_role not anon | 2026-01-26 |
+| 6 RLS policies for trend writes (INSERT + UPDATE × 3 tables) | Postgres requires separate policies per operation type and table | 2026-01-26 |
+| UNIQUE constraint on trends.title | Repository upsert with onConflict requires UNIQUE constraint on conflict column | 2026-01-26 |
 | CRON_SECRET authentication via Bearer token | Vercel sends cron requests with Authorization header, prevents unauthorized access | 2026-01-25 |
 | Stats-based cron responses for monitoring | Return detailed stats (counts, duration, success flags) for Vercel log analysis | 2026-01-25 |
 | Force dynamic cron endpoint | dynamic='force-dynamic' prevents response caching, critical for daily jobs | 2026-01-25 |
@@ -82,16 +85,16 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 - **CRON_SECRET environment variable required** - Generate with `openssl rand -hex 32` and add to Vercel dashboard before deployment
 - **Upstash Redis credentials required** - Cache/rate-limiter need UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN env vars
-- **Database migrations 002 and 003 need manual execution** - trend_sources junction table and current_score column must be applied in Supabase SQL Editor before testing persistence
+- **Database migrations 002, 003, and 004 applied** - All migrations executed in Supabase (trends junction, current_score, write policies)
+- **google-trends-api reliability issue** - Library may return HTML instead of JSON when Google changes backend; SerpApi fallback planned
 - Amazon Associates requires existing site traffic for approval — apply early
-- google-trends-api can break when Google changes backend — monitor for errors
 - Vercel Hobby cron runs anywhere in hour (not exact time) - acceptable for daily trends
 
 ## Session Continuity
 
-Last session: 2026-01-25
-Stopped at: Completed 02-04-PLAN.md - Phase 2 complete, daily cron endpoint operational
+Last session: 2026-01-26
+Stopped at: Completed 02-05-PLAN.md - Phase 2 complete, database write policies enabled
 Resume file: None
 
 ---
-*Last updated: 2026-01-25*
+*Last updated: 2026-01-26*
