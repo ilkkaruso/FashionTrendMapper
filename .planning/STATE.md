@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Current Position
 
-- **Phase:** 3 of 5 — Visualization (planning complete)
-- **Plan:** 0 of 5 in phase (plans created: 03-01 through 03-05, ready for execution)
-- **Status:** Phase 3 plans ready - D3 bubble chart, filters, modal with 5 wave-ordered plans
-- **Last activity:** 2026-01-26 - Completed Phase 3 planning with MODAL-02 blocker fixed
+- **Phase:** 3 of 5 — Visualization (in progress)
+- **Plan:** 1 of 5 in phase (03-01 complete, Wave 1 done)
+- **Status:** D3 infrastructure complete - hooks and force simulation ready
+- **Last activity:** 2026-01-27 - Completed 03-01-PLAN.md - D3 infrastructure (4m 19s)
 
-**Progress:** ████████████████ 100% Phase 2 | ████████░░ 40% Overall
+**Progress:** ████████████████ 100% Phase 2 | ████████░░ 44% Overall (11/25 plans)
 
 ## Milestone: v1.0
 
@@ -22,12 +22,13 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 |-------|------|--------|----------|
 | 1 | Foundation | ✅ Complete | 100% (3/3) |
 | 2 | Data Collection | ✅ Complete | 100% (5/5) |
-| 3 | Visualization | ○ Pending | 0% |
+| 3 | Visualization | 🔄 In Progress | 20% (1/5) |
 | 4 | Affiliate Integration | ○ Pending | 0% |
 | 5 | Admin & Archive | ○ Pending | 0% |
 
 ## Recent Activity
 
+- 2026-01-27: Completed 03-01-PLAN.md - D3 infrastructure with force simulation hooks (4m 19s)
 - 2026-01-27: Replaced google-trends-api with SerpApi for reliable trend fetching
 - 2026-01-26: Phase 3 planning complete - 5 plans created (03-01 through 03-05)
 - 2026-01-26: Fixed MODAL-02 blocker - added description to types and plans
@@ -44,6 +45,10 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| Charge force proportional to bubble area | Strength = -radius² × 0.05 creates repulsion scaled to bubble size, prevents overlap | 2026-01-27 |
+| Weak center force in D3 simulation | 0.05 strength lets collision dynamics dominate, larger bubbles naturally drift to center | 2026-01-27 |
+| Array cloning in D3 tick handler | [...simulation.nodes()] creates new reference to trigger React re-render on position updates | 2026-01-27 |
+| Simulation in useRef pattern | Avoids recreation on every render, only recreate when nodes.length/width/height changes | 2026-01-27 |
 | SerpApi replaces google-trends-api | Old library returned HTML instead of JSON; SerpApi is reliable with 100 free searches/month | 2026-01-27 |
 | Description field added to NormalizedTrend type | MODAL-02 requires trend description, database has column, types now expose it | 2026-01-26 |
 | D3 for calculations, React for DOM | D3+React best practice per 03-RESEARCH.md, cleaner separation of concerns | 2026-01-26 |
@@ -101,10 +106,10 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Session Continuity
 
-Last session: 2026-01-26
-Stopped at: Phase 3 planning complete, ready for execution
+Last session: 2026-01-27
+Stopped at: Completed 03-01-PLAN.md (D3 infrastructure)
 Resume file: None
-Next action: Execute Phase 3 plans (03-01 through 03-05) with wave-based parallelization
+Next action: Execute 03-02 (Bubble Chart Component) - Wave 1 complete, ready for Wave 2
 
 ---
-*Last updated: 2026-01-26*
+*Last updated: 2026-01-27*
