@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Current Position
 
 - **Phase:** 3 of 5 — Visualization (in progress)
-- **Plan:** 3 of 5 in phase (03-01, 03-02, 03-03 complete, Wave 2 done)
-- **Status:** Filter system ready - keyword-based categories with URL state management
-- **Last activity:** 2026-01-27 - Completed 03-03-PLAN.md - Filter system (4m 52s)
+- **Plan:** 4 of 5 in phase (03-01, 03-02, 03-03, 03-04 complete)
+- **Status:** Trend details modal ready - native dialog with text similarity
+- **Last activity:** 2026-01-27 - Completed 03-04-PLAN.md - Trend details modal (5m 30s)
 
-**Progress:** ████████████████ 100% Phase 2 | █████████░ 52% Overall (13/25 plans)
+**Progress:** ████████████████ 100% Phase 2 | ██████████░ 56% Overall (14/25 plans)
 
 ## Milestone: v1.0
 
@@ -22,12 +22,13 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 |-------|------|--------|----------|
 | 1 | Foundation | ✅ Complete | 100% (3/3) |
 | 2 | Data Collection | ✅ Complete | 100% (5/5) |
-| 3 | Visualization | 🔄 In Progress | 60% (3/5) |
+| 3 | Visualization | 🔄 In Progress | 80% (4/5) |
 | 4 | Affiliate Integration | ○ Pending | 0% |
 | 5 | Admin & Archive | ○ Pending | 0% |
 
 ## Recent Activity
 
+- 2026-01-27: Completed 03-04-PLAN.md - Trend details modal with text similarity (5m 30s)
 - 2026-01-27: Completed 03-03-PLAN.md - Filter system with keyword categories and URL state (4m 52s)
 - 2026-01-27: Completed 03-02-PLAN.md - Bubble chart components with animated force physics (3m 53s)
 - 2026-01-27: Completed 03-01-PLAN.md - D3 infrastructure with force simulation hooks (4m 19s)
@@ -47,6 +48,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| Jaccard similarity for related trends | Simple word overlap sufficient for v1, tokenize → Set intersection/union → sort by coefficient | 2026-01-27 |
+| Native dialog element for modal (implementation) | Built-in accessibility (focus trap, ESC close), useRef + useEffect pattern with showModal() | 2026-01-27 |
+| 3-trend limit for related display | Prevents information overload, focuses on most relevant matches | 2026-01-27 |
 | Keyword-based category detection (not DB schema) | Runtime matching avoids migration, flexible keyword lists, defaults to 'styles' | 2026-01-27 |
 | URL query params for filter state | Shareable links, Next.js useSearchParams/useRouter pattern | 2026-01-27 |
 | AND logic for filter composition | Search + category both must match for intuitive narrowing behavior | 2026-01-27 |
@@ -115,9 +119,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completed 03-03-PLAN.md (Filter System)
+Stopped at: Completed 03-04-PLAN.md (Trend Details Modal)
 Resume file: None
-Next action: Execute 03-04 (Page Integration) - Wave 2 complete, ready to integrate all components
+Next action: Execute 03-05 (Page Integration) - All visualization components ready, final integration needed
 
 ---
 *Last updated: 2026-01-27*
