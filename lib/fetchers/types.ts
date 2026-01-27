@@ -29,6 +29,8 @@ export interface RawTrend {
 export interface NormalizedTrend {
   /** Trend title/query */
   title: string;
+  /** Optional description for the trend */
+  description?: string;
   /** Normalized score (0-100) */
   score: number;
   /** All sources for this trend */

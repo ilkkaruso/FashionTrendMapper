@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Current Position
 
-- **Phase:** 2 of 5 — Data Collection (complete)
-- **Plan:** 5 of 5 in phase (completed: 02-01, 02-02, 02-03, 02-04, 02-05)
-- **Status:** Phase 2 complete - Database write policies enabled, full data pipeline operational, ready for Phase 3 visualization
-- **Last activity:** 2026-01-26 - Completed 02-05-PLAN.md (gap closure)
+- **Phase:** 3 of 5 — Visualization (planning complete)
+- **Plan:** 0 of 5 in phase (plans created: 03-01 through 03-05, ready for execution)
+- **Status:** Phase 3 plans ready - D3 bubble chart, filters, modal with 5 wave-ordered plans
+- **Last activity:** 2026-01-26 - Completed Phase 3 planning with MODAL-02 blocker fixed
 
-**Progress:** ████████████████ 100% Phase 2 | ████████░░ 50% Overall
+**Progress:** ████████████████ 100% Phase 2 | ████████░░ 40% Overall
 
 ## Milestone: v1.0
 
@@ -28,6 +28,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Recent Activity
 
+- 2026-01-27: Replaced google-trends-api with SerpApi for reliable trend fetching
+- 2026-01-26: Phase 3 planning complete - 5 plans created (03-01 through 03-05)
+- 2026-01-26: Fixed MODAL-02 blocker - added description to types and plans
 - 2026-01-26: Completed 02-05-PLAN.md - Database write policies (gap closure, Phase 2 complete)
 - 2026-01-25: Completed 02-04-PLAN.md - Daily cron endpoint for automated trend collection
 - 2026-01-25: Completed 02-03-PLAN.md - Score normalization and database persistence
@@ -41,6 +44,12 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| SerpApi replaces google-trends-api | Old library returned HTML instead of JSON; SerpApi is reliable with 100 free searches/month | 2026-01-27 |
+| Description field added to NormalizedTrend type | MODAL-02 requires trend description, database has column, types now expose it | 2026-01-26 |
+| D3 for calculations, React for DOM | D3+React best practice per 03-RESEARCH.md, cleaner separation of concerns | 2026-01-26 |
+| Native dialog element for modal | Built-in accessibility (focus trap, ESC close), no library needed | 2026-01-26 |
+| URL search params for filter state | Shareable filter URLs, per 03-RESEARCH.md recommendation | 2026-01-26 |
+| d3plus-text for SVG text wrapping | Only library that handles SVG text wrapping in bubbles | 2026-01-26 |
 | Service_role-scoped RLS policies for server operations | Cron runs server-side with service_role credentials, policies must target service_role not anon | 2026-01-26 |
 | 6 RLS policies for trend writes (INSERT + UPDATE × 3 tables) | Postgres requires separate policies per operation type and table | 2026-01-26 |
 | UNIQUE constraint on trends.title | Repository upsert with onConflict requires UNIQUE constraint on conflict column | 2026-01-26 |
@@ -86,15 +95,16 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 - **CRON_SECRET environment variable required** - Generate with `openssl rand -hex 32` and add to Vercel dashboard before deployment
 - **Upstash Redis credentials required** - Cache/rate-limiter need UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN env vars
 - **Database migrations 002, 003, and 004 applied** - All migrations executed in Supabase (trends junction, current_score, write policies)
-- **google-trends-api reliability issue** - Library may return HTML instead of JSON when Google changes backend; SerpApi fallback planned
+- **SerpApi integration complete** - Replaced google-trends-api with SerpApi (100 free searches/month, ~30 needed)
 - Amazon Associates requires existing site traffic for approval — apply early
 - Vercel Hobby cron runs anywhere in hour (not exact time) - acceptable for daily trends
 
 ## Session Continuity
 
 Last session: 2026-01-26
-Stopped at: Completed 02-05-PLAN.md - Phase 2 complete, database write policies enabled
+Stopped at: Phase 3 planning complete, ready for execution
 Resume file: None
+Next action: Execute Phase 3 plans (03-01 through 03-05) with wave-based parallelization
 
 ---
 *Last updated: 2026-01-26*
