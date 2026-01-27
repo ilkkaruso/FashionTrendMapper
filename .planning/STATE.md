@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Current Position
 
 - **Phase:** 3 of 5 — Visualization (in progress)
-- **Plan:** 1 of 5 in phase (03-01 complete, Wave 1 done)
-- **Status:** D3 infrastructure complete - hooks and force simulation ready
-- **Last activity:** 2026-01-27 - Completed 03-01-PLAN.md - D3 infrastructure (4m 19s)
+- **Plan:** 2 of 5 in phase (03-01, 03-02 complete, Wave 2 executing)
+- **Status:** Bubble chart components ready - BubbleChart and Bubble with D3 force physics
+- **Last activity:** 2026-01-27 - Completed 03-02-PLAN.md - Bubble chart components (3m 53s)
 
-**Progress:** ████████████████ 100% Phase 2 | ████████░░ 44% Overall (11/25 plans)
+**Progress:** ████████████████ 100% Phase 2 | █████████░ 48% Overall (12/25 plans)
 
 ## Milestone: v1.0
 
@@ -22,12 +22,13 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 |-------|------|--------|----------|
 | 1 | Foundation | ✅ Complete | 100% (3/3) |
 | 2 | Data Collection | ✅ Complete | 100% (5/5) |
-| 3 | Visualization | 🔄 In Progress | 20% (1/5) |
+| 3 | Visualization | 🔄 In Progress | 40% (2/5) |
 | 4 | Affiliate Integration | ○ Pending | 0% |
 | 5 | Admin & Archive | ○ Pending | 0% |
 
 ## Recent Activity
 
+- 2026-01-27: Completed 03-02-PLAN.md - Bubble chart components with animated force physics (3m 53s)
 - 2026-01-27: Completed 03-01-PLAN.md - D3 infrastructure with force simulation hooks (4m 19s)
 - 2026-01-27: Replaced google-trends-api with SerpApi for reliable trend fetching
 - 2026-01-26: Phase 3 planning complete - 5 plans created (03-01 through 03-05)
@@ -45,6 +46,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| d3.scaleSqrt() for radius scaling | Area proportional to score (not radius) for accurate visual comparison, 20-80px range | 2026-01-27 |
+| Green/red color coding for trends | Instant visual feedback: green (#22c55e) for positive, red (#ef4444) for negative | 2026-01-27 |
+| useMemo for bubble nodes array | Prevents node recreation on every render, avoids unnecessary simulation resets | 2026-01-27 |
 | Charge force proportional to bubble area | Strength = -radius² × 0.05 creates repulsion scaled to bubble size, prevents overlap | 2026-01-27 |
 | Weak center force in D3 simulation | 0.05 strength lets collision dynamics dominate, larger bubbles naturally drift to center | 2026-01-27 |
 | Array cloning in D3 tick handler | [...simulation.nodes()] creates new reference to trigger React re-render on position updates | 2026-01-27 |
@@ -107,9 +111,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completed 03-01-PLAN.md (D3 infrastructure)
+Stopped at: Completed 03-02-PLAN.md (Bubble Chart Components)
 Resume file: None
-Next action: Execute 03-02 (Bubble Chart Component) - Wave 1 complete, ready for Wave 2
+Next action: Wave 2 in progress - 03-03 (Filter Controls) executing in parallel
 
 ---
 *Last updated: 2026-01-27*
