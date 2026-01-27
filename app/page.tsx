@@ -1,29 +1,154 @@
-import { createClient } from '@/lib/supabase/server'
+'use client';
 
-export default async function HomePage() {
-  const supabase = await createClient()
+import { useEffect, useState, Suspense } from 'react';
+import { BubbleChart } from './components/BubbleChart';
+import { FilterBar } from './components/FilterBar';
+import { TrendModal } from './components/TrendModal';
+import { useResizeObserver } from '@/lib/hooks/useResizeObserver';
+import { useTrendFiltering } from '@/lib/hooks/useTrendFiltering';
+import type { TrendWithHistory } from '@/lib/fetchers/types';
 
-  // Test database connection
-  const { data: categories, error } = await supabase
-    .from('categories')
-    .select('*')
+interface TrendsResponse {
+  success: boolean;
+  data: TrendWithHistory[];
+  lastUpdated: string;
+  error?: string;
+}
+
+function HomeContent() {
+  const [trends, setTrends] = useState<TrendWithHistory[]>([]);
+  const [lastUpdated, setLastUpdated] = useState<string>('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Modal state
+  const [selectedTrend, setSelectedTrend] = useState<TrendWithHistory | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Responsive sizing
+  const { ref: containerRef, dimensions } = useResizeObserver<HTMLDivElement>();
+
+  // Filtering
+  const {
+    filteredTrends,
+    searchQuery,
+    setSearchQuery,
+    category,
+    setCategory,
+  } = useTrendFiltering(trends);
+
+  // Fetch trends on mount
+  useEffect(() => {
+    async function fetchTrends() {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/trends');
+        const json: TrendsResponse = await response.json();
+
+        if (json.success) {
+          setTrends(json.data);
+          setLastUpdated(json.lastUpdated);
+        } else {
+          setError(json.error || 'Failed to load trends');
+        }
+      } catch (err) {
+        console.error('Error fetching trends:', err);
+        setError('Failed to load trends');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchTrends();
+  }, []);
+
+  // Handle bubble click
+  const handleBubbleClick = (trend: TrendWithHistory) => {
+    setSelectedTrend(trend);
+    setIsModalOpen(true);
+  };
+
+  // Handle modal close
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedTrend(null);
+  };
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Fashion Trends</h1>
-      <p className="text-gray-600 mb-4">Trend visualization coming soon...</p>
+    <div className="flex flex-col h-screen">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 px-6 py-4">
+        <h1 className="text-2xl font-bold text-gray-900">
+          Fashion Trend Mapper
+        </h1>
+        <p className="text-sm text-gray-600 mt-1">
+          Discover trending fashion items and styles
+        </p>
+      </header>
 
-      {/* Database connection test */}
-      <div className="mt-8 p-4 border rounded-lg bg-gray-50">
-        <h2 className="text-sm font-semibold text-gray-700 mb-2">Database Status</h2>
-        {error ? (
-          <p className="text-sm text-red-600">Error: {error.message}</p>
-        ) : (
-          <p className="text-sm text-green-600">
-            ✓ Connected to Supabase ({categories?.length || 0} categories)
-          </p>
+      {/* Filter Bar */}
+      <FilterBar
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        category={category}
+        onCategoryChange={setCategory}
+        lastUpdated={lastUpdated}
+      />
+
+      {/* Visualization Container */}
+      <div ref={containerRef} className="flex-1 bg-gray-50">
+        {loading && (
+          <div className="flex items-center justify-center h-full">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">Loading trends...</p>
+            </div>
+          </div>
+        )}
+
+        {error && (
+          <div className="flex items-center justify-center h-full">
+            <div className="text-center text-red-600">
+              <p className="font-semibold">Error loading trends</p>
+              <p className="text-sm mt-1">{error}</p>
+            </div>
+          </div>
+        )}
+
+        {!loading && !error && dimensions.width > 0 && dimensions.height > 0 && (
+          <BubbleChart
+            trends={filteredTrends}
+            width={dimensions.width}
+            height={dimensions.height}
+            onBubbleClick={handleBubbleClick}
+          />
         )}
       </div>
-    </main>
-  )
+
+      {/* Trend Modal */}
+      <TrendModal
+        trend={selectedTrend}
+        allTrends={trends}
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+      />
+    </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <HomeContent />
+    </Suspense>
+  );
 }
