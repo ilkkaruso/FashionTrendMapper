@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Current Position
 
 - **Phase:** 3 of 5 — Visualization (in progress)
-- **Plan:** 2 of 5 in phase (03-01, 03-02 complete, Wave 2 executing)
-- **Status:** Bubble chart components ready - BubbleChart and Bubble with D3 force physics
-- **Last activity:** 2026-01-27 - Completed 03-02-PLAN.md - Bubble chart components (3m 53s)
+- **Plan:** 3 of 5 in phase (03-01, 03-02, 03-03 complete, Wave 2 done)
+- **Status:** Filter system ready - keyword-based categories with URL state management
+- **Last activity:** 2026-01-27 - Completed 03-03-PLAN.md - Filter system (4m 52s)
 
-**Progress:** ████████████████ 100% Phase 2 | █████████░ 48% Overall (12/25 plans)
+**Progress:** ████████████████ 100% Phase 2 | █████████░ 52% Overall (13/25 plans)
 
 ## Milestone: v1.0
 
@@ -22,12 +22,13 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 |-------|------|--------|----------|
 | 1 | Foundation | ✅ Complete | 100% (3/3) |
 | 2 | Data Collection | ✅ Complete | 100% (5/5) |
-| 3 | Visualization | 🔄 In Progress | 40% (2/5) |
+| 3 | Visualization | 🔄 In Progress | 60% (3/5) |
 | 4 | Affiliate Integration | ○ Pending | 0% |
 | 5 | Admin & Archive | ○ Pending | 0% |
 
 ## Recent Activity
 
+- 2026-01-27: Completed 03-03-PLAN.md - Filter system with keyword categories and URL state (4m 52s)
 - 2026-01-27: Completed 03-02-PLAN.md - Bubble chart components with animated force physics (3m 53s)
 - 2026-01-27: Completed 03-01-PLAN.md - D3 infrastructure with force simulation hooks (4m 19s)
 - 2026-01-27: Replaced google-trends-api with SerpApi for reliable trend fetching
@@ -46,6 +47,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| Keyword-based category detection (not DB schema) | Runtime matching avoids migration, flexible keyword lists, defaults to 'styles' | 2026-01-27 |
+| URL query params for filter state | Shareable links, Next.js useSearchParams/useRouter pattern | 2026-01-27 |
+| AND logic for filter composition | Search + category both must match for intuitive narrowing behavior | 2026-01-27 |
 | d3.scaleSqrt() for radius scaling | Area proportional to score (not radius) for accurate visual comparison, 20-80px range | 2026-01-27 |
 | Green/red color coding for trends | Instant visual feedback: green (#22c55e) for positive, red (#ef4444) for negative | 2026-01-27 |
 | useMemo for bubble nodes array | Prevents node recreation on every render, avoids unnecessary simulation resets | 2026-01-27 |
@@ -111,9 +115,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 ## Session Continuity
 
 Last session: 2026-01-27
-Stopped at: Completed 03-02-PLAN.md (Bubble Chart Components)
+Stopped at: Completed 03-03-PLAN.md (Filter System)
 Resume file: None
-Next action: Wave 2 in progress - 03-03 (Filter Controls) executing in parallel
+Next action: Execute 03-04 (Page Integration) - Wave 2 complete, ready to integrate all components
 
 ---
 *Last updated: 2026-01-27*
