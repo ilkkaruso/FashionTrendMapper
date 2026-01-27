@@ -162,6 +162,7 @@ export async function getTrendsWithChange(): Promise<TrendWithHistory[]> {
     .select(`
       id,
       title,
+      description,
       current_score,
       trend_history!inner (
         snapshot_date,
@@ -218,6 +219,7 @@ export async function getTrendsWithChange(): Promise<TrendWithHistory[]> {
 
     return {
       title: trendRow.title,
+      description: trendRow.description || undefined,
       score: currentScore,
       sources,
       sourceBreakdown,
