@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Current Position
 
-- **Phase:** 3 of 5 — Visualization (complete)
-- **Plan:** 5 of 5 in phase (all complete)
-- **Status:** Phase 3 complete - Full visualization functional with API integration
-- **Last activity:** 2026-01-27 - Completed 03-05-PLAN.md - Page integration (5m)
+- **Phase:** 4 of 5 — Affiliate Integration (complete)
+- **Plan:** 1 of 1 in phase (100% complete)
+- **Status:** Phase 4 complete - Amazon affiliate links integrated
+- **Last activity:** 2026-01-28 - Completed 04-01-PLAN.md - Amazon affiliate links with SiteStripe approach (3m)
 
-**Progress:** ████████████████ 100% Phase 3 | ████████████░ 60% Overall (15/25 plans)
+**Progress:** ████████████████░ 80% Overall (4/5 phases complete, Phase 5 ready)
 
 ## Milestone: v1.0
 
@@ -23,11 +23,13 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 | 1 | Foundation | ✅ Complete | 100% (3/3) |
 | 2 | Data Collection | ✅ Complete | 100% (5/5) |
 | 3 | Visualization | ✅ Complete | 100% (5/5) |
-| 4 | Affiliate Integration | ○ Pending | 0% |
+| 4 | Affiliate Integration | ✅ Complete | 100% (1/1) |
 | 5 | Admin & Archive | ○ Pending | 0% |
 
 ## Recent Activity
 
+- 2026-01-28: **Phase 4 Complete** - Amazon affiliate integration via SiteStripe approach
+- 2026-01-28: Completed 04-01-PLAN.md - Amazon affiliate links with Shop on Amazon button (3m)
 - 2026-01-27: **Phase 3 Complete** - Full visualization with animated bubbles, filters, and modal
 - 2026-01-27: Completed 03-05-PLAN.md - Page integration with API (5m)
 - 2026-01-27: Completed 03-04-PLAN.md - Trend details modal with text similarity (5m 30s)
@@ -50,6 +52,9 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 | Decision | Rationale | Date |
 |----------|-----------|------|
+| Amazon Fashion department (i=fashion) for targeted search | Restricting to Fashion department improves search relevance over general Amazon search | 2026-01-28 |
+| Amazon orange brand color (#FF9900) for button | Brand recognition helps users identify Amazon as destination | 2026-01-28 |
+| SiteStripe links over PA-API for v1 | PA-API requires 3 qualifying sales first; SiteStripe links work immediately with just Associates account | 2026-01-28 |
 | Suspense boundary for useSearchParams | Next.js requires Suspense when using useSearchParams during SSR, wrapped HomeContent in Suspense | 2026-01-27 |
 | Description field optional in repository | Database column nullable, return undefined when null, maintains type safety | 2026-01-27 |
 | API response structure for trends | success/data/error pattern with lastUpdated timestamp for consistent client handling | 2026-01-27 |
@@ -123,10 +128,10 @@ See: .planning/PROJECT.md (updated 2026-01-21)
 
 ## Session Continuity
 
-Last session: 2026-01-27
-Stopped at: Completed 03-05-PLAN.md (Page Integration) - Phase 3 complete
+Last session: 2026-01-28
+Stopped at: Completed 04-01-PLAN.md - Amazon affiliate links
 Resume file: None
-Next action: Begin Phase 4 planning (Affiliate Integration) - Amazon product search and link generation
+Next action: Execute Phase 5 (`/gsd:execute-phase 5`) - Admin & Archive features
 
 ---
-*Last updated: 2026-01-27*
+*Last updated: 2026-01-28*
