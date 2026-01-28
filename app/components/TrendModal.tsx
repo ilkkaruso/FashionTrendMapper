@@ -3,6 +3,7 @@
 import { useRef, useEffect } from 'react';
 import type { TrendWithHistory } from '@/lib/fetchers/types';
 import { findRelatedTrends } from '@/lib/utils/related-trends';
+import { getAmazonFashionLink } from '@/lib/affiliate/amazon-links';
 
 interface TrendModalProps {
   trend: TrendWithHistory | null;
@@ -136,6 +137,24 @@ export function TrendModal({ trend, allTrends, isOpen, onClose }: TrendModalProp
             </ul>
           </div>
         )}
+
+        {/* Shop on Amazon (Affiliate) */}
+        <div className="pt-4 border-t border-gray-200">
+          <a
+            href={getAmazonFashionLink(trend.title)}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            className="flex items-center justify-center gap-2 w-full bg-[#FF9900] hover:bg-[#E88B00] text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93s3.06-7.44 7-7.93v15.86zm2-15.86c3.94.49 7 3.85 7 7.93s-3.06 7.44-7 7.93V4.07z"/>
+            </svg>
+            Shop &ldquo;{trend.title}&rdquo; on Amazon
+          </a>
+          <p className="text-xs text-gray-500 mt-2 text-center">
+            As an Amazon Associate we earn from qualifying purchases.
+          </p>
+        </div>
       </div>
     </dialog>
   );
