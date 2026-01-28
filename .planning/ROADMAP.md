@@ -9,11 +9,11 @@
 |-------|------|--------------|--------|
 | 1 | Foundation | 4 | ✅ Complete |
 | 2 | Data Collection | 5 | ✅ Complete |
-| 3 | Visualization | 15 | ○ Pending |
-| 4 | Affiliate Integration | 8 | ○ Pending |
+| 3 | Visualization | 15 | ✅ Complete |
+| 4 | Affiliate Integration | 8 | ✅ Complete |
 | 5 | Admin & Archive | 12 | ○ Pending |
 
-**Total:** 5 phases | 38 requirements | 40% complete
+**Total:** 5 phases | 38 requirements | 80% complete
 
 ---
 
@@ -113,11 +113,11 @@ Plans:
 **Plans:** 5 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Install D3 dependencies, create hooks (useForceSimulation, useResizeObserver), visualization types
-- [ ] 03-02-PLAN.md — BubbleChart and Bubble components with D3 force simulation and text wrapping
-- [ ] 03-03-PLAN.md — FilterBar component and useTrendFiltering hook with URL state management
-- [ ] 03-04-PLAN.md — TrendModal with native dialog and related trends
-- [ ] 03-05-PLAN.md — Wire all components on home page with API endpoint
+- [x] 03-01-PLAN.md — Install D3 dependencies, create hooks (useForceSimulation, useResizeObserver), visualization types
+- [x] 03-02-PLAN.md — BubbleChart and Bubble components with D3 force simulation and text wrapping
+- [x] 03-03-PLAN.md — FilterBar component and useTrendFiltering hook with URL state management
+- [x] 03-04-PLAN.md — TrendModal with native dialog and related trends
+- [x] 03-05-PLAN.md — Wire all components on home page with API endpoint
 
 **Dependencies:** Phase 2 (needs trend data to display)
 
@@ -146,9 +146,16 @@ Plans:
 6. "Buy on Amazon" buttons have valid affiliate links
 7. Affiliate provider abstracted for future network additions
 
+**Plans:** 1 plan (simplified - SiteStripe approach)
+
+Plans:
+- [x] 04-01-PLAN.md — Amazon affiliate search links (SiteStripe approach - no PA-API needed)
+
 **Dependencies:** Phase 3 (modal must exist to show products)
 
-**Note:** Requires Amazon Associates account approval before affiliate links work.
+**Note:** Uses SiteStripe link method (links to Amazon search results) instead of PA-API. PA-API requires 3 qualifying sales first - can upgrade to product grid later.
+
+**Future enhancement:** Once 3 sales achieved, add PA-API integration for product images/prices in modal.
 
 ---
 
@@ -218,4 +225,4 @@ All 39 v1 requirements mapped:
 ---
 
 *Roadmap created: 2026-01-21*
-*Last updated: 2026-01-26*
+*Last updated: 2026-01-28*
