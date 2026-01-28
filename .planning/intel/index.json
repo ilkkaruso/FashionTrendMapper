@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": 1769076416934,
+  "updated": 1769584887924,
   "files": {
     "/home/lesh/source/FashionTrendMapper/app/layout.tsx": {
       "exports": [
@@ -18,12 +18,17 @@
     "/home/lesh/source/FashionTrendMapper/app/page.tsx": {
       "exports": [
         "default",
-        "async"
+        "Home"
       ],
       "imports": [
-        "@/lib/supabase/server"
+        "react",
+        "./components/BubbleChart",
+        "./components/FilterBar",
+        "./components/TrendModal",
+        "@/lib/hooks/useResizeObserver",
+        "@/lib/hooks/useTrendFiltering"
       ],
-      "indexed": 1769075245430
+      "indexed": 1769504751856
     },
     "/home/lesh/source/FashionTrendMapper/app/archive/page.tsx": {
       "exports": [
@@ -71,6 +76,221 @@
         "next/server"
       ],
       "indexed": 1769076405644
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/fetchers/types.ts": {
+      "exports": [
+        "SourceType",
+        "RawTrend",
+        "NormalizedTrend",
+        "TrendWithHistory",
+        "FetchResult"
+      ],
+      "imports": [],
+      "indexed": 1769436684918
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/utils/cache.ts": {
+      "exports": [
+        "getCached",
+        "setCache",
+        "getStaleCached"
+      ],
+      "imports": [
+        "@upstash/redis"
+      ],
+      "indexed": 1769329764618
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/utils/rate-limiter.ts": {
+      "exports": [
+        "ratelimit",
+        "checkRateLimit"
+      ],
+      "imports": [
+        "@upstash/ratelimit",
+        "@upstash/redis"
+      ],
+      "indexed": 1769329787826
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/fetchers/google-trends.ts": {
+      "exports": [
+        "fetchGoogleTrends"
+      ],
+      "imports": [
+        "@/lib/utils/cache",
+        "@/lib/utils/rate-limiter"
+      ],
+      "indexed": 1769477633455
+    },
+    "/home/lesh/source/FashionTrendMapper/app/api/test/google-trends/route.ts": {
+      "exports": [
+        "dynamic",
+        "GET"
+      ],
+      "imports": [
+        "next/server",
+        "@/lib/fetchers/google-trends"
+      ],
+      "indexed": 1769330224480
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/normalizers/score-normalizer.ts": {
+      "exports": [
+        "normalizeScores"
+      ],
+      "imports": [],
+      "indexed": 1769330560898
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/database/trend-repository.ts": {
+      "exports": [
+        "saveTrendsWithHistory",
+        "getTrendsWithChange"
+      ],
+      "imports": [
+        "@/lib/supabase/server"
+      ],
+      "indexed": 1769504550421
+    },
+    "/home/lesh/source/FashionTrendMapper/app/api/cron/fetch-trends/route.ts": {
+      "exports": [
+        "dynamic",
+        "maxDuration",
+        "GET"
+      ],
+      "imports": [
+        "next/server",
+        "@/lib/fetchers/google-trends",
+        "@/lib/normalizers/score-normalizer",
+        "@/lib/database/trend-repository"
+      ],
+      "indexed": 1769347150523
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/visualization/types.ts": {
+      "exports": [
+        "BubbleNode"
+      ],
+      "imports": [],
+      "indexed": 1769478809293
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/visualization/forces.ts": {
+      "exports": [
+        "createBubbleSimulation"
+      ],
+      "imports": [
+        "d3"
+      ],
+      "indexed": 1769478853972
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/hooks/useForceSimulation.ts": {
+      "exports": [
+        "useForceSimulation"
+      ],
+      "imports": [
+        "react",
+        "@/lib/visualization/forces"
+      ],
+      "indexed": 1769478909142
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/hooks/useResizeObserver.ts": {
+      "exports": [
+        "useResizeObserver"
+      ],
+      "imports": [
+        "react"
+      ],
+      "indexed": 1769478956733
+    },
+    "/home/lesh/source/FashionTrendMapper/app/components/BubbleChart.tsx": {
+      "exports": [
+        "BubbleChart"
+      ],
+      "imports": [
+        "react",
+        "d3",
+        "@/lib/hooks/useForceSimulation",
+        "./Bubble"
+      ],
+      "indexed": 1769479244856
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/utils/category-matcher.ts": {
+      "exports": [
+        "CATEGORIES",
+        "detectCategory",
+        "Category"
+      ],
+      "imports": [],
+      "indexed": 1769479249794
+    },
+    "/home/lesh/source/FashionTrendMapper/app/components/Bubble.tsx": {
+      "exports": [
+        "Bubble"
+      ],
+      "imports": [
+        "react",
+        "d3plus-text"
+      ],
+      "indexed": 1769479286965
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/hooks/useTrendFiltering.ts": {
+      "exports": [
+        "useTrendFiltering"
+      ],
+      "imports": [
+        "next/navigation",
+        "react",
+        "@/lib/utils/category-matcher"
+      ],
+      "indexed": 1769479288041
+    },
+    "/home/lesh/source/FashionTrendMapper/app/components/FilterBar.tsx": {
+      "exports": [
+        "FilterBar"
+      ],
+      "imports": [
+        "@/lib/utils/category-matcher"
+      ],
+      "indexed": 1769479433315
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/utils/related-trends.ts": {
+      "exports": [
+        "findRelatedTrends"
+      ],
+      "imports": [],
+      "indexed": 1769479665192
+    },
+    "/home/lesh/source/FashionTrendMapper/types/d3plus-text.d.ts": {
+      "exports": [
+        "TextBox"
+      ],
+      "imports": [],
+      "indexed": 1769504194240
+    },
+    "/home/lesh/source/FashionTrendMapper/app/components/TrendModal.tsx": {
+      "exports": [
+        "TrendModal"
+      ],
+      "imports": [
+        "react",
+        "@/lib/utils/related-trends",
+        "@/lib/affiliate/amazon-links"
+      ],
+      "indexed": 1769584887924
+    },
+    "/home/lesh/source/FashionTrendMapper/app/api/trends/route.ts": {
+      "exports": [
+        "GET"
+      ],
+      "imports": [
+        "next/server",
+        "@/lib/database/trend-repository"
+      ],
+      "indexed": 1769504610111
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/affiliate/amazon-links.ts": {
+      "exports": [
+        "getAmazonSearchLink",
+        "getAmazonFashionLink",
+        "isAffiliateConfigured"
+      ],
+      "imports": [],
+      "indexed": 1769584824616
     }
   }
 }

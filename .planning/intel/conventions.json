@@ -1,17 +1,35 @@
 {
   "version": 1,
-  "updated": 1769076405644,
-  "naming": {
-    "exports": {
-      "dominant": "camelCase",
-      "count": 8,
-      "percentage": 73
-    }
-  },
+  "updated": 1769584887924,
+  "naming": {},
   "directories": {
     "lib": {
       "purpose": "Utility functions",
-      "files": 2
+      "files": 16
+    },
+    "utils": {
+      "purpose": "Utility functions",
+      "files": 4
+    },
+    "api": {
+      "purpose": "API endpoints",
+      "files": 3
+    },
+    "test": {
+      "purpose": "Test files",
+      "files": 1
+    },
+    "hooks": {
+      "purpose": "React/custom hooks",
+      "files": 3
+    },
+    "components": {
+      "purpose": "UI components",
+      "files": 4
+    },
+    "types": {
+      "purpose": "TypeScript types",
+      "files": 1
     }
   },
   "suffixes": {}

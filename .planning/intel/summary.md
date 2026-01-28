@@ -1,18 +1,14 @@
-# Codebase Intelligence
+# Codebase Intelligence Summary
 
-**Indexed entities:** 8
-**Last updated:** 2026-01-22
+Last updated: 2026-01-28T07:21:27.927Z
+Indexed files: 29
 
-## Dependency Hotspots
+## Key Directories
 
-Files with most dependents (change carefully):
-1. `globals-css` (1 dependents)
-1. `supabase-server` (1 dependents)
+- `lib/`: Utility functions (16 files)
+- `utils/`: Utility functions (4 files)
+- `api/`: API endpoints (3 files)
+- `test/`: Test files (1 files)
+- `hooks/`: React/custom hooks (3 files)
 
-## Module Types
-
-- **Component**: 4 files
-- **Util**: 2 files
-- **Middleware**: 2 files
-
-**Relationships tracked:** 2
+Total exports: 46
