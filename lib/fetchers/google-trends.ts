@@ -1,9 +1,9 @@
 /**
  * Google Trends fetcher using SerpApi with fashion filtering and caching
  *
- * Fetches daily trending searches from SerpApi's Google Trends Trending Now API
- * and filters for fashion-related content. Implements defensive caching with
- * stale fallback for API resilience.
+ * Fetches fashion trends using two strategies:
+ * 1. Filter trending searches for fashion-related content
+ * 2. Fetch related/rising queries for fashion-specific search terms
  */
 
 import type { RawTrend, FetchResult } from '@/lib/fetchers/types';
@@ -14,27 +14,44 @@ import { ratelimit, checkRateLimit } from '@/lib/utils/rate-limiter';
  * Fashion-related keywords for filtering trends
  */
 const FASHION_KEYWORDS = [
-  'fashion',
-  'style',
-  'clothing',
-  'wear',
-  'outfit',
-  'brand',
-  'sneaker',
-  'shoe',
-  'dress',
-  'jacket',
-  'jeans',
-  'accessory',
-  'streetwear',
-  'designer',
-  'luxury',
-  'vintage',
-  'aesthetic',
+  // General fashion terms
+  'fashion', 'style', 'clothing', 'wear', 'outfit', 'apparel', 'wardrobe',
+  'streetwear', 'designer', 'luxury', 'vintage', 'aesthetic', 'trend',
+  // Clothing items
+  'dress', 'jacket', 'jeans', 'pants', 'shirt', 'blouse', 'skirt', 'shorts',
+  'sweater', 'hoodie', 'coat', 'blazer', 'suit', 'top', 'leggings', 'cardigan',
+  // Footwear
+  'sneaker', 'shoe', 'boot', 'heel', 'sandal', 'loafer', 'trainer',
+  // Accessories
+  'accessory', 'bag', 'handbag', 'purse', 'watch', 'jewelry', 'sunglasses',
+  'hat', 'cap', 'scarf', 'belt', 'wallet',
+  // Major fashion brands
+  'nike', 'adidas', 'gucci', 'prada', 'louis vuitton', 'chanel', 'dior',
+  'balenciaga', 'versace', 'burberry', 'fendi', 'hermès', 'hermes',
+  'yeezy', 'supreme', 'off-white', 'zara', 'h&m', 'uniqlo', 'shein',
+  'lululemon', 'jordan', 'new balance', 'converse', 'vans',
+  'ralph lauren', 'calvin klein', 'tommy hilfiger', 'levis', 'gap',
+  'north face', 'patagonia', 'carhartt', 'dickies', 'stussy',
+  // Athletic/sportswear
+  'athleisure', 'activewear', 'sportswear', 'gym wear', 'yoga',
+  // Style descriptors
+  'boho', 'minimalist', 'preppy', 'grunge', 'cottagecore', 'y2k',
+  'quiet luxury', 'old money', 'clean girl', 'mob wife',
 ];
 
 /**
- * SerpApi response types
+ * Fashion search queries to fetch rising/related trends for
+ */
+const FASHION_QUERIES = [
+  'fashion trends 2026',
+  'streetwear',
+  'sneakers',
+  'designer bags',
+  'outfit ideas',
+];
+
+/**
+ * SerpApi response types for Trending Now
  */
 interface SerpApiTrendingSearch {
   query: string;
@@ -46,19 +63,37 @@ interface SerpApiTrendingSearch {
   serpapi_google_trends_link?: string;
 }
 
-interface SerpApiResponse {
-  search_metadata?: {
-    status: string;
-  };
+interface SerpApiTrendingResponse {
+  search_metadata?: { status: string };
   trending_searches?: SerpApiTrendingSearch[];
   error?: string;
 }
 
 /**
+ * SerpApi response types for Related Queries
+ */
+interface SerpApiRelatedQuery {
+  query: string;
+  value?: number | string;
+  extracted_value?: number;
+  link?: string;
+  serpapi_link?: string;
+}
+
+interface SerpApiRelatedResponse {
+  search_metadata?: { status: string };
+  related_queries?: {
+    rising?: SerpApiRelatedQuery[];
+    top?: SerpApiRelatedQuery[];
+  };
+  interest_over_time?: {
+    timeline_data?: { values?: { value: number }[] }[];
+  };
+  error?: string;
+}
+
+/**
  * Check if trend title matches fashion keywords
- *
- * @param title Trend title to check
- * @returns True if title contains any fashion keyword
  */
 function isFashionRelated(title: string): boolean {
   const lowerTitle = title.toLowerCase();
@@ -66,142 +101,195 @@ function isFashionRelated(title: string): boolean {
 }
 
 /**
- * Fetch daily trending searches from SerpApi Google Trends
+ * Fetch trending searches and filter for fashion
+ */
+async function fetchTrendingNow(apiKey: string): Promise<RawTrend[]> {
+  const params = new URLSearchParams({
+    engine: 'google_trends_trending_now',
+    geo: 'US',
+    hours: '24',
+    api_key: apiKey,
+  });
+
+  const response = await fetch(`https://serpapi.com/search?${params.toString()}`);
+  if (!response.ok) {
+    throw new Error(`SerpApi trending request failed: ${response.status}`);
+  }
+
+  const data: SerpApiTrendingResponse = await response.json();
+  if (data.error) throw new Error(`SerpApi error: ${data.error}`);
+
+  const trendingSearches = data.trending_searches || [];
+  const fashionTrends = trendingSearches.filter((trend) =>
+    isFashionRelated(trend.query || '')
+  );
+
+  console.log(`Trending Now: ${fashionTrends.length} fashion trends from ${trendingSearches.length} total`);
+
+  return fashionTrends.map((trend) => ({
+    title: trend.query,
+    score: trend.search_volume || 50000,
+    source: 'google' as const,
+    sourceUrl: `https://trends.google.com/trends/explore?q=${encodeURIComponent(trend.query)}`,
+    metadata: {
+      increasePercentage: trend.increase_percentage,
+      active: trend.active,
+      categories: trend.categories?.map((c) => c.name) || [],
+      relatedQueries: trend.trend_breakdown || [],
+    },
+  }));
+}
+
+/**
+ * Fetch rising/related queries for a fashion search term
+ */
+async function fetchRelatedQueries(apiKey: string, query: string): Promise<RawTrend[]> {
+  const params = new URLSearchParams({
+    engine: 'google_trends',
+    q: query,
+    geo: 'US',
+    data_type: 'RELATED_QUERIES',
+    api_key: apiKey,
+  });
+
+  const response = await fetch(`https://serpapi.com/search?${params.toString()}`);
+  if (!response.ok) {
+    console.warn(`Related queries request failed for "${query}": ${response.status}`);
+    return [];
+  }
+
+  const data: SerpApiRelatedResponse = await response.json();
+  if (data.error) {
+    console.warn(`SerpApi error for "${query}": ${data.error}`);
+    return [];
+  }
+
+  const rising = data.related_queries?.rising || [];
+  const top = data.related_queries?.top || [];
+
+  // Combine rising (prioritized) and top queries
+  const allQueries = [...rising, ...top.slice(0, 5)];
+
+  console.log(`Related queries for "${query}": ${rising.length} rising, ${top.length} top`);
+
+  return allQueries.map((item, index) => {
+    // Rising queries have "Breakout" or percentage, top have search volume
+    let score = 50000;
+    if (item.extracted_value) {
+      score = item.extracted_value * 1000;
+    } else if (typeof item.value === 'number') {
+      score = item.value * 1000;
+    } else if (item.value === 'Breakout') {
+      score = 100000; // High score for breakout trends
+    }
+
+    // Decay score based on position to maintain ranking
+    score = Math.max(1000, score - index * 5000);
+
+    return {
+      title: item.query,
+      score,
+      source: 'google' as const,
+      sourceUrl: item.link || `https://trends.google.com/trends/explore?q=${encodeURIComponent(item.query)}`,
+      metadata: {
+        relatedTo: query,
+        type: rising.includes(item) ? 'rising' : 'top',
+      },
+    };
+  });
+}
+
+/**
+ * Fetch fashion trends from Google Trends via SerpApi
  *
- * Implements:
- * - Rate limiting (10 req/10s)
- * - Caching (1 hour fresh, 24 hour stale fallback)
- * - Fashion keyword filtering
- * - Graceful degradation on API failure
- *
- * @returns FetchResult containing RawTrend[] or error
+ * Combines:
+ * 1. Trending Now filtered for fashion keywords
+ * 2. Rising/related queries for fashion-specific searches
  */
 export async function fetchGoogleTrends(): Promise<FetchResult<RawTrend[]>> {
   const cacheKey = 'google-trends-daily';
-  const cacheTTL = 60 * 60; // 1 hour in seconds
+  const cacheTTL = 60 * 60; // 1 hour
 
-  // Check for API key
   const apiKey = process.env.SERPAPI_KEY;
   if (!apiKey) {
     console.error('SERPAPI_KEY environment variable not set');
-
-    // Try to return cached data
     const cached = await getCached<RawTrend[]>(cacheKey);
-    if (cached) {
-      return { success: true, data: cached, cached: true };
-    }
-
-    const staleCached = await getStaleCached<RawTrend[]>(cacheKey);
-    if (staleCached) {
-      return { success: true, data: staleCached, cached: true };
-    }
-
-    return {
-      success: false,
-      error: 'SERPAPI_KEY not configured and no cached data available',
-    };
+    if (cached) return { success: true, data: cached, cached: true };
+    const stale = await getStaleCached<RawTrend[]>(cacheKey);
+    if (stale) return { success: true, data: stale, cached: true };
+    return { success: false, error: 'SERPAPI_KEY not configured' };
   }
 
   try {
-    // 1. Check rate limit first
+    // Check rate limit
     try {
       await checkRateLimit(ratelimit, 'google-trends');
-    } catch (rateLimitError) {
-      console.warn('Rate limit exceeded, returning cached data:', rateLimitError);
-
-      // Try to return cached data
+    } catch {
+      console.warn('Rate limit exceeded, checking cache...');
       const cached = await getCached<RawTrend[]>(cacheKey);
-      if (cached) {
-        return { success: true, data: cached, cached: true };
-      }
-
-      // No cache available, try stale cache
-      const staleCached = await getStaleCached<RawTrend[]>(cacheKey);
-      if (staleCached) {
-        return { success: true, data: staleCached, cached: true };
-      }
-
-      return {
-        success: false,
-        error: 'Rate limit exceeded and no cached data available',
-      };
+      if (cached) return { success: true, data: cached, cached: true };
+      const stale = await getStaleCached<RawTrend[]>(cacheKey);
+      if (stale) return { success: true, data: stale, cached: true };
+      return { success: false, error: 'Rate limit exceeded and no cached data available' };
     }
 
-    // 2. Check cache
+    // Check cache
     const cached = await getCached<RawTrend[]>(cacheKey);
     if (cached) {
       console.log('Returning cached Google Trends data');
       return { success: true, data: cached, cached: true };
     }
 
-    // 3. Fetch from SerpApi Google Trends Trending Now
-    console.log('Fetching fresh Google Trends data from SerpApi...');
+    console.log('Fetching fresh Google Trends data...');
 
-    const params = new URLSearchParams({
-      engine: 'google_trends_trending_now',
-      geo: 'US',
-      hours: '24',
-      api_key: apiKey,
-    });
+    // Fetch from multiple sources in parallel
+    const [trendingTrends, ...relatedResults] = await Promise.all([
+      fetchTrendingNow(apiKey).catch((err) => {
+        console.warn('Trending Now fetch failed:', err.message);
+        return [] as RawTrend[];
+      }),
+      ...FASHION_QUERIES.map((query) =>
+        fetchRelatedQueries(apiKey, query).catch((err) => {
+          console.warn(`Related queries fetch failed for "${query}":`, err.message);
+          return [] as RawTrend[];
+        })
+      ),
+    ]);
 
-    const response = await fetch(`https://serpapi.com/search?${params.toString()}`);
+    // Combine all trends
+    const allTrends = [
+      ...trendingTrends,
+      ...relatedResults.flat(),
+    ];
 
-    if (!response.ok) {
-      throw new Error(`SerpApi request failed: ${response.status} ${response.statusText}`);
+    // Deduplicate by title (case-insensitive), keeping highest score
+    const trendMap = new Map<string, RawTrend>();
+    for (const trend of allTrends) {
+      const key = trend.title.toLowerCase();
+      const existing = trendMap.get(key);
+      if (!existing || trend.score > existing.score) {
+        trendMap.set(key, trend);
+      }
     }
 
-    const data: SerpApiResponse = await response.json();
+    const trends = Array.from(trendMap.values());
+    console.log(`Total unique fashion trends: ${trends.length}`);
 
-    if (data.error) {
-      throw new Error(`SerpApi error: ${data.error}`);
+    if (trends.length === 0) {
+      throw new Error('No fashion trends found from any source');
     }
 
-    const trendingSearches = data.trending_searches || [];
-
-    if (!Array.isArray(trendingSearches) || trendingSearches.length === 0) {
-      throw new Error('No trending searches found in SerpApi response');
-    }
-
-    // 4. Filter for fashion-related trends
-    const fashionTrends = trendingSearches.filter((trend) =>
-      isFashionRelated(trend.query || '')
-    );
-
-    console.log(
-      `Filtered ${fashionTrends.length} fashion trends from ${trendingSearches.length} total trends`
-    );
-
-    // 5. Map to RawTrend[]
-    const trends: RawTrend[] = fashionTrends.map((trend) => ({
-      title: trend.query,
-      score: trend.search_volume || 0,
-      source: 'google' as const,
-      sourceUrl: trend.serpapi_google_trends_link ||
-        `https://trends.google.com/trends/explore?q=${encodeURIComponent(trend.query)}`,
-      metadata: {
-        increasePercentage: trend.increase_percentage,
-        active: trend.active,
-        categories: trend.categories?.map((c) => c.name) || [],
-        relatedQueries: trend.trend_breakdown || [],
-      },
-    }));
-
-    // 6. Cache the result
+    // Cache the result
     await setCache(cacheKey, trends, cacheTTL);
 
-    // 7. Return success
     return { success: true, data: trends };
   } catch (error) {
     console.error('Google Trends fetch error:', error);
-
-    // Try to return stale cache as fallback
-    const staleCached = await getStaleCached<RawTrend[]>(cacheKey);
-    if (staleCached) {
-      console.warn('Returning stale cache due to fetch error');
-      return { success: true, data: staleCached, cached: true };
+    const stale = await getStaleCached<RawTrend[]>(cacheKey);
+    if (stale) {
+      console.warn('Returning stale cache due to error');
+      return { success: true, data: stale, cached: true };
     }
-
-    // No fallback available
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',

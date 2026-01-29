@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": 1769681280383,
+  "updated": 1769681665032,
   "files": {
     "/home/lesh/source/FashionTrendMapper/app/layout.tsx": {
       "exports": [
@@ -118,7 +118,7 @@
         "@/lib/utils/cache",
         "@/lib/utils/rate-limiter"
       ],
-      "indexed": 1769477633455
+      "indexed": 1769681665032
     },
     "/home/lesh/source/FashionTrendMapper/app/api/test/google-trends/route.ts": {
       "exports": [
