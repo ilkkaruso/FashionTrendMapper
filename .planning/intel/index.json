@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": 1769584887924,
+  "updated": 1769681280383,
   "files": {
     "/home/lesh/source/FashionTrendMapper/app/layout.tsx": {
       "exports": [
@@ -144,9 +144,9 @@
         "getTrendsWithChange"
       ],
       "imports": [
-        "@/lib/supabase/server"
+        "@/lib/supabase/admin"
       ],
-      "indexed": 1769504550421
+      "indexed": 1769681280383
     },
     "/home/lesh/source/FashionTrendMapper/app/api/cron/fetch-trends/route.ts": {
       "exports": [
@@ -291,6 +291,15 @@
       ],
       "imports": [],
       "indexed": 1769584824616
+    },
+    "/home/lesh/source/FashionTrendMapper/lib/supabase/admin.ts": {
+      "exports": [
+        "createAdminClient"
+      ],
+      "imports": [
+        "@supabase/supabase-js"
+      ],
+      "indexed": 1769681237485
     }
   }
 }

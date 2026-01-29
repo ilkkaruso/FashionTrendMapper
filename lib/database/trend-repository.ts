@@ -5,7 +5,7 @@
  * retrieving trends with change calculations.
  */
 
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import type { NormalizedTrend, TrendWithHistory, SourceType } from '@/lib/fetchers/types';
 
 /**
@@ -33,7 +33,7 @@ export async function saveTrendsWithHistory(trends: NormalizedTrend[]): Promise<
     return;
   }
 
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   const today = new Date().toISOString().split('T')[0];
   const now = new Date().toISOString();
 
@@ -146,7 +146,7 @@ export async function saveTrendsWithHistory(trends: NormalizedTrend[]): Promise<
  * // ]
  */
 export async function getTrendsWithChange(): Promise<TrendWithHistory[]> {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   // Calculate today and yesterday date strings
   const today = new Date();
