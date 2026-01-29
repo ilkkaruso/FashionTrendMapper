@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": 1769682346552,
+  "updated": 1769682681162,
   "files": {
     "/home/lesh/source/FashionTrendMapper/app/layout.tsx": {
       "exports": [
@@ -246,7 +246,7 @@
       "imports": [
         "@/lib/utils/category-matcher"
       ],
-      "indexed": 1769479433315
+      "indexed": 1769682681162
     },
     "/home/lesh/source/FashionTrendMapper/lib/utils/related-trends.ts": {
       "exports": [
