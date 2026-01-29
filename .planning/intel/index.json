@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": 1769681665032,
+  "updated": 1769682346552,
   "files": {
     "/home/lesh/source/FashionTrendMapper/app/layout.tsx": {
       "exports": [
@@ -13,7 +13,7 @@
         "next/link",
         "./globals.css"
       ],
-      "indexed": 1769073243752
+      "indexed": 1769682280218
     },
     "/home/lesh/source/FashionTrendMapper/app/page.tsx": {
       "exports": [
@@ -28,7 +28,7 @@
         "@/lib/hooks/useResizeObserver",
         "@/lib/hooks/useTrendFiltering"
       ],
-      "indexed": 1769504751856
+      "indexed": 1769682286770
     },
     "/home/lesh/source/FashionTrendMapper/app/archive/page.tsx": {
       "exports": [
@@ -118,7 +118,7 @@
         "@/lib/utils/cache",
         "@/lib/utils/rate-limiter"
       ],
-      "indexed": 1769681665032
+      "indexed": 1769682346552
     },
     "/home/lesh/source/FashionTrendMapper/app/api/test/google-trends/route.ts": {
       "exports": [
@@ -176,7 +176,7 @@
       "imports": [
         "d3"
       ],
-      "indexed": 1769478853972
+      "indexed": 1769682320476
     },
     "/home/lesh/source/FashionTrendMapper/lib/hooks/useForceSimulation.ts": {
       "exports": [

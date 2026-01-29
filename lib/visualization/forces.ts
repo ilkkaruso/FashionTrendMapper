@@ -4,8 +4,10 @@ import type { BubbleNode } from './types';
 /**
  * Create D3 force simulation for bubble chart
  *
- * Configures collision, center, and charge forces for Crypto Bubbles-style layout.
- * Larger bubbles naturally drift to center due to collision dynamics.
+ * Configures forces for tight packing with larger bubbles in center:
+ * - Strong center attraction pulls everything together
+ * - Radial force pushes smaller bubbles outward
+ * - Tight collision for compact grouping
  *
  * @param nodes - Array of bubble nodes
  * @param width - Container width
@@ -17,24 +19,45 @@ export function createBubbleSimulation(
   width: number,
   height: number
 ) {
+  const centerX = width / 2;
+  const centerY = height / 2;
+
+  // Find max radius for normalization
+  const maxRadius = Math.max(...nodes.map(n => n.radius), 1);
+
   return d3.forceSimulation(nodes)
-    // Many-body charge for repulsion (prevents overlap)
-    .force('charge', d3.forceManyBody()
-      .strength(d => -Math.pow((d as BubbleNode).radius, 2) * 0.05)
-    )
-    // Center force pulls to middle (weak, let collisions dominate)
-    .force('center', d3.forceCenter(width / 2, height / 2)
-      .strength(0.05)
-    )
-    // Collision force prevents bubble overlap
+    // Strong center force pulls all bubbles together
+    .force('center', d3.forceCenter(centerX, centerY))
+
+    // X force pulls toward center
+    .force('x', d3.forceX(centerX).strength(0.15))
+
+    // Y force pulls toward center
+    .force('y', d3.forceY(centerY).strength(0.15))
+
+    // Radial force: larger bubbles stay center, smaller pushed out
+    .force('radial', d3.forceRadial<BubbleNode>(
+      d => {
+        // Larger bubbles (higher radius) get smaller radial distance (stay center)
+        // Smaller bubbles get pushed outward
+        const normalizedSize = d.radius / maxRadius;
+        const maxDist = Math.min(width, height) * 0.35;
+        return maxDist * (1 - normalizedSize * 0.8);
+      },
+      centerX,
+      centerY
+    ).strength(0.3))
+
+    // Tight collision - minimal padding for compact look
     .force('collision', d3.forceCollide<BubbleNode>()
-      .radius(d => d.radius + 5) // 5px padding
-      .strength(0.8)
-      .iterations(2)
+      .radius(d => d.radius + 2) // 2px padding (was 5)
+      .strength(1)
+      .iterations(3)
     )
-    // Slower cooling for smoother animation
+
+    // Simulation parameters for smooth settling
     .alpha(1)
-    .alphaDecay(0.02)
-    .velocityDecay(0.4)
+    .alphaDecay(0.015)
+    .velocityDecay(0.3)
     .alphaMin(0.001);
 }

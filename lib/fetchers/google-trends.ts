@@ -44,10 +44,34 @@ const FASHION_KEYWORDS = [
  */
 const FASHION_QUERIES = [
   'fashion trends 2026',
-  'streetwear',
-  'sneakers',
-  'designer bags',
+  'streetwear trends',
+  'sneaker releases',
+  'designer fashion',
   'outfit ideas',
+  'womens fashion',
+  'mens fashion',
+];
+
+/**
+ * Terms that indicate NON-fashion content (false positives)
+ * These override fashion keyword matches
+ */
+const EXCLUSION_TERMS = [
+  // People/celebrities (unless fashion-specific)
+  'author', 'actor', 'actress', 'singer', 'musician', 'politician',
+  'president', 'senator', 'governor', 'mayor', 'coach', 'player',
+  // Sports (non-fashion)
+  'vs', 'game', 'score', 'playoff', 'championship', 'tournament',
+  'nfl', 'nba', 'mlb', 'nhl', 'ufc', 'wwe', 'fifa', 'ncaa',
+  'football', 'basketball', 'baseball', 'hockey', 'soccer', 'tennis',
+  // Entertainment
+  'movie', 'film', 'tv show', 'series', 'episode', 'season',
+  'album', 'song', 'concert', 'tour',
+  // Tech/other
+  'stock', 'crypto', 'bitcoin', 'iphone', 'android', 'app',
+  'election', 'vote', 'news', 'weather', 'earthquake',
+  // Books/media
+  'book', 'novel', 'author', 'writer', 'chapter',
 ];
 
 /**
@@ -93,10 +117,16 @@ interface SerpApiRelatedResponse {
 }
 
 /**
- * Check if trend title matches fashion keywords
+ * Check if trend title matches fashion keywords and isn't excluded
  */
 function isFashionRelated(title: string): boolean {
   const lowerTitle = title.toLowerCase();
+
+  // First check if it contains any exclusion terms
+  const isExcluded = EXCLUSION_TERMS.some((term) => lowerTitle.includes(term));
+  if (isExcluded) return false;
+
+  // Then check for fashion keywords
   return FASHION_KEYWORDS.some((keyword) => lowerTitle.includes(keyword));
 }
 

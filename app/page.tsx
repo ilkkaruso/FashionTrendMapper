@@ -76,16 +76,6 @@ function HomeContent() {
 
   return (
     <div className="flex flex-col h-screen">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <h1 className="text-2xl font-bold text-gray-900">
-          Fashion Trend Mapper
-        </h1>
-        <p className="text-sm text-gray-600 mt-1">
-          Discover trending fashion items and styles
-        </p>
-      </header>
-
       {/* Filter Bar */}
       <FilterBar
         searchQuery={searchQuery}

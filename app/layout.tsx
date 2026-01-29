@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Fashion Trend Mapper",
+  title: "Fashion Bubbles",
   description: "Interactive visualization of current fashion trends",
 };
 
@@ -23,17 +23,17 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <div className="min-h-screen flex flex-col">
           {/* Header */}
-          <header className="border-b">
-            <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-              <h1 className="text-xl font-bold">Fashion Trend Mapper</h1>
+          <header className="bg-black text-white">
+            <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+              <h1 className="text-xl font-bold">Fashion Bubbles</h1>
               <nav className="flex gap-6">
-                <Link href="/" className="hover:text-gray-600 transition-colors">
+                <Link href="/" className="hover:text-gray-300 transition-colors">
                   Home
                 </Link>
-                <Link href="/archive" className="hover:text-gray-600 transition-colors">
+                <Link href="/archive" className="hover:text-gray-300 transition-colors">
                   Archive
                 </Link>
-                <Link href="/admin" className="hover:text-gray-600 transition-colors">
+                <Link href="/admin" className="hover:text-gray-300 transition-colors">
                   Admin
                 </Link>
               </nav>
@@ -46,10 +46,10 @@ export default function RootLayout({
           </main>
 
           {/* Footer */}
-          <footer className="border-t">
-            <div className="container mx-auto px-4 py-6">
-              <div className="flex flex-col gap-2 text-sm text-gray-600">
-                <p>&copy; 2026 Fashion Trend Mapper</p>
+          <footer className="bg-black text-white">
+            <div className="container mx-auto px-4 py-3">
+              <div className="flex justify-between items-center text-xs text-gray-400">
+                <p>&copy; 2026 Fashion Bubbles</p>
                 <p>We may earn commissions from featured products.</p>
               </div>
             </div>
